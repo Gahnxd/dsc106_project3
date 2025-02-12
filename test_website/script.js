@@ -24,7 +24,7 @@ let currentCycle = [1, 5, 9];
 
 // Populate dropdown
 let selectMouse = document.getElementById('select-mouse');
-let cycleBox = document.getElementById('cycle-box');
+let cycleBox = document.getElementById('cycle-buttons');
 
 let mouseOptions = ['avg', 'avg_fem', 'avg_male']
 let cycleOptions = [1, 5, 9];
@@ -33,22 +33,32 @@ let cycleOptions = [1, 5, 9];
 mouseOptions.forEach((mouse) => {
     let option = document.createElement('option');
     option.text = mouse;
+    option.classList.add('mouse-option');
     selectMouse.add(option);
 });
 
 // add buttons for cycles
 cycleOptions.forEach((cycle) => {
     let button = document.createElement('button');
+    button.classList.add('cycle-button'); // add class for styling
     button.innerHTML = Math.floor(cycle/4) + 1;
     button.onclick = function() {
-        if (currentCycle[0] == cycle && currentCycle.length == 1) {
-            // Reset to initial state
-            generateLines([1, 5, 9]);
-            currentCycle = [1, 5, 9];
+        if (currentCycle.includes(cycle)) {
+            // Remove this cycle
+            currentCycle = currentCycle.filter(c => c != cycle);
+            generateLines(currentCycle);
+            
+            // Change class to cycle-button
+            button.classList.remove('selected-cycle');
+            button.classList.add('cycle-button');
         } else {
-            // Show only this cycle
-            generateLines([cycle]);
-            currentCycle = [cycle];
+            // Add this cycle
+            currentCycle.push(cycle);
+            generateLines(currentCycle);
+
+            // Change class to selected-cycle
+            button.classList.remove('cycle-button');
+            button.classList.add('selected-cycle');
         }
     };
     cycleBox.appendChild(button);
@@ -121,7 +131,7 @@ function generateLines(cycles){
                 d3.select(this).attr('stroke-width', 1.5);
             })
             .on('click', function() {
-                if (currentCycle[0] == i && currentCycle.length == 1) {
+                if (currentCycle.length == 1 && currentCycle[0] == i) {
                     // Reset to initial state
                     generateLines([1, 5, 9]);
                     currentCycle = [1, 5, 9];
