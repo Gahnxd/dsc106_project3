@@ -1,6 +1,6 @@
 async function loadMouseData() {
     try {
-        const response = await fetch('./mouse_data_new.json');
+        const response = await fetch('./mouse_data_test.json');
         const mouseData = await response.json();
         return mouseData;
     }   catch (error) {
