@@ -1,6 +1,7 @@
+// Function for loading mouse data from JSON file
 async function loadMouseData() {
     try {
-        const response = await fetch('./mouse_data_test.json');
+        const response = await fetch('./mouse_data_test.json'); // change to correct path
         const mouseData = await response.json();
         return mouseData;
     }   catch (error) {
@@ -8,8 +9,10 @@ async function loadMouseData() {
     }
 }
 
+// Load data
 const mouseData = await loadMouseData();
 
+// Create SVG element
 const svg = d3.select('#mouse-plot');
 const width = 1600;
 const height = 800;
@@ -18,30 +21,31 @@ const margin = { top: 20, right: 20, bottom: 30, left: 40 };
 svg.attr('width', width);
 svg.attr('height', height);
 
-// Initial data
+// Initial data & cycle selection
 let yValues = mouseData.avg;
 let currentCycle = [1, 5, 9];
 
-// Populate dropdown
+// Populate selection dropdown and cycle buttons
 let selectMouse = document.getElementById('select-mouse');
 let cycleBox = document.getElementById('cycle-buttons');
 
+// Options for dropdown and buttons
 let mouseOptions = ['avg', 'avg_fem', 'avg_male']
 let cycleOptions = [1, 5, 9];
 
-// add options to dropdown
+// Add options to dropdown
 mouseOptions.forEach((mouse) => {
     let option = document.createElement('option');
     option.text = mouse;
-    option.classList.add('mouse-option');
+    option.classList.add('mouse-option'); // Class: mouse-option
     selectMouse.add(option);
 });
 
-// add buttons for cycles
+// Add buttons for cycles
 cycleOptions.forEach((cycle) => {
     let button = document.createElement('button');
-    button.classList.add('cycle-button'); // add class for styling
-    button.innerHTML = Math.floor(cycle/4) + 1;
+    button.classList.add('cycle-button'); // Class: cycle-button
+    button.innerHTML = Math.floor(cycle/4) + 1; // Transform cycle as 1 to 4
     button.onclick = function() {
         if (currentCycle.includes(cycle)) {
             // Remove this cycle
@@ -76,7 +80,7 @@ const yScale = d3
     .domain([35, 39])
     .range([height - margin.bottom, margin.top]);
 
-// Create axes and labels
+// Create axes
 const xAxis = d3.axisBottom(xScale).ticks(4);
 const yAxis = d3.axisLeft(yScale);
 
@@ -91,12 +95,14 @@ svg.append('g')
 let colors = d3.scaleOrdinal(d3.schemeTableau10);
 
 function generateLines(cycles){
-    // reset svg
+    // Reset lines
     d3.selectAll('.line').remove();
+
+    // Generate lines for each cycle
     cycles.forEach(cycle => {
         let i = cycle;
 
-        // get indices for each cycle
+        // Get indices for each cycle
         let indices = [];
         for (let j = 0; j < 4; j++) {
             mouseData.day.forEach((day, idx) => {
@@ -106,17 +112,18 @@ function generateLines(cycles){
             });
         }
 
-        // get data from indices
+        // Get data from indices
         let data = [];
         indices.forEach((idx) => {
             data.push(yValues[idx]);
         });
 
-        // generate line with data
+        // Generate line with data
         let line = d3.line()
             .x((d, i) => xScale(i/1440)) // 1440 minutes in a day
             .y(d => yScale(d));
         
+        // Append line to SVG
         svg.append('path')
             .datum(data)
             .attr('fill', 'none')
@@ -125,9 +132,11 @@ function generateLines(cycles){
             .attr('d', line)
             .attr('class', 'line')
             .on('mouseover', function() {
+                // Highlight line on mouseover
                 d3.select(this).attr('stroke-width', 3);
             })
             .on('mouseout', function() {
+                // Reset line on mouseout
                 d3.select(this).attr('stroke-width', 1.5);
             })
             .on('click', function() {
@@ -146,10 +155,10 @@ function generateLines(cycles){
     });
 }
 
-// generate initial lines
+// Generate initial lines
 generateLines([1, 5, 9]);
 
-// Event listeners
+// Mouse selection dropdown event listener
 selectMouse.addEventListener('change', function() {
     yValues = mouseData[this.value];
     generateLines(currentCycle);
