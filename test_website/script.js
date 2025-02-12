@@ -14,8 +14,8 @@ const mouseData = await loadMouseData();
 
 // Create SVG element
 const svg = d3.select('#mouse-plot');
-const width = 1600;
-const height = 800;
+const width = 1200;
+const height = 600;
 const margin = { top: 20, right: 20, bottom: 30, left: 40 };
 
 svg.attr('width', width);
@@ -72,7 +72,7 @@ cycleOptions.forEach((cycle) => {
 // Create scales
 const xScale = d3
   .scaleLinear()
-  .domain([0, 4.1])
+  .domain([0, 96])
   .range([margin.left, width - margin.right]);
 
 const yScale = d3
@@ -81,7 +81,7 @@ const yScale = d3
     .range([height - margin.bottom, margin.top]);
 
 // Create axes
-const xAxis = d3.axisBottom(xScale).ticks(4);
+const xAxis = d3.axisBottom(xScale).tickValues(d3.range(0, 97, 6)); // Every 6 hours
 const yAxis = d3.axisLeft(yScale);
 
 svg.append('g')
@@ -120,7 +120,7 @@ function generateLines(cycles){
 
         // Generate line with data
         let line = d3.line()
-            .x((d, i) => xScale(i/1440)) // 1440 minutes in a day
+            .x((d, i) => xScale(i/60)) // 60 minutes in an hour
             .y(d => yScale(d));
         
         // Append line to SVG
