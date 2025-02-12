@@ -70,13 +70,13 @@ dropdownButton.addEventListener('click', function() {
 // Add buttons for cycles
 cycleOptions.forEach((cycle) => {
     let button = document.createElement('button');
-    button.classList.add('cycle-button'); // Class: cycle-button
+    button.classList.add('selected-cycle'); // Class: default selected-cycle
     button.innerHTML = "Cycle " + (Math.floor(cycle/4) + 1); // Transform cycle as 1 to 4
     button.onclick = function() {
         if (currentCycle.includes(cycle)) {
             // Remove this cycle
             currentCycle = currentCycle.filter(c => c != cycle);
-            generateLines(currentCycle, currentMouse    );
+            generateLines(currentCycle, currentMouse);
             
             // Change class to cycle-button
             button.classList.remove('selected-cycle');
