@@ -63,8 +63,21 @@ mouseOptions.forEach((mouse) => {
 
 // Add event listener to dropdown
 dropdownButton.addEventListener('click', function() {
-    // Show/hide dropdown
-    document.getElementsByClassName('dropdown-hidden')[0].classList.toggle('dropdown-visible'); 
+    if (dropdownButton.classList.contains('dropdown-open')) {
+        // Close dropdown
+        dropdownButton.classList.remove('dropdown-open');
+        dropdownButton.classList.add('dropdown-closed');
+
+        // Hide dropdown
+        selectMouse.classList.remove('dropdown-visible');
+        selectMouse.classList.add('dropdown-hidden');
+
+    } else {
+        dropdownButton.classList.remove('dropdown-closed');
+        dropdownButton.classList.add('dropdown-open');
+        selectMouse.classList.remove('dropdown-hidden');
+        selectMouse.classList.add('dropdown-visible');
+    }
 });
 
 // Add buttons for cycles
@@ -212,16 +225,3 @@ function generateLines(cycles, mouse = ['avg']) {
 
 // Generate initial lines
 generateLines([1, 5, 9], ['avg']);
-
-// Mouse selection dropdown event listener
-// selectMouse.addEventListener('change', function() {
-//     if (currentMouse.includes(this.value)) {
-//         // Remove this mouse
-//         currentMouse = currentMouse.filter(m => m != this.value);
-//         generateLines(currentCycle, currentMouse);
-//     } else {
-//         // Add this mouse
-//         currentMouse.push(this.value);
-//         generateLines(currentCycle, currentMouse);
-//     }
-// });
