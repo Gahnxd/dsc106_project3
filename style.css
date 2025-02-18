@@ -1,0 +1,211 @@
+:root {
+  --primary-color: #2c3e50;
+  --secondary-color: #3498db;
+  --hover-color: #2980b9;
+  --text-color: #2c3e50;
+
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+h1 {
+  text-align: center;
+  color: var(--primary-color);
+  margin-bottom: 30px;
+  margin-top: 15px;
+  font-size: 2em;
+}
+
+.dropdown {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+#dropdown-button {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+#dropdown-button:hover {
+  background-color: var(--hover-color);
+}
+
+#select-mouse {
+  position: absolute;
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 15px;
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+  width: 200px;
+}
+.dropdown-hidden {
+  display: none;
+}
+
+.dropdown-visible {
+  display: block;
+}
+#select-mouse label {
+  display: block;
+  padding: 8px;
+  margin: 4px 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#select-mouse label:hover {
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
+#select-mouse input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.filter-title {
+  font-size: 1.2em;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+#cycle-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.cycle-button, .selected-cycle {
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.cycle-button {
+  background-color: #e9ecef;
+  color: var(--primary-color);
+}
+
+.selected-cycle {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.cycle-button:hover, .selected-cycle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#mouse-plot {
+  background-color: white;
+  border-radius: var(--border-radius);
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.xaxis-label, .yaxis-label {
+  fill: var(--text-color);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  h1 {
+    font-size: 2em;
+  }
+  
+  #dropdown-button {
+    width: 100%;
+  }
+  
+  #select-mouse {
+    width: 100%;
+    left: 0;
+  }
+}
+.tooltip {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  pointer-events: none;
+  font-size: 14px;
+  box-shadow: var(--box-shadow);
+  z-index: 1000;
+}
+
+.selection-display {
+  margin-top: 10px;
+  padding: 8px;
+  font-size: 0.9rem;
+  color: var(--primary-color);
+  line-height: 1.4;
+}
+
+.selection-display span {
+  display: inline-block;
+  background-color: #e9ecef;
+  padding: 2px 8px;
+  margin: 2px 4px;
+  border-radius: 4px;
+}
+
+.grid line {
+  stroke: #e0e0e0;
+  stroke-width: 0.5;
+}
+
+.grid path {
+  stroke-width: 0;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
