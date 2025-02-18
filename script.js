@@ -23,14 +23,28 @@ async function initializeVisualization() {
     let currentCycle = [1];
     let currentMouse = ['avg'];
 
-    const dropdownButton = document.getElementById('dropdown-button');
-    const selectMouse = document.getElementById('select-mouse');
+    const dropdownButtonAvg = document.getElementById('dropdown-button-avg');
+    const dropdownButtonMale = document.getElementById('dropdown-button-male');
+    const dropdownButtonFemale = document.getElementById('dropdown-button-female');
+    const dropdownButtons = [dropdownButtonAvg, dropdownButtonMale, dropdownButtonFemale];
+    const selectAvg = document.getElementById('select-avg');
+    const selectMale = document.getElementById('select-male');
+    const selectFemale = document.getElementById('select-female');
+    const selectOptions = [selectAvg, selectMale, selectFemale];
     const cycleBox = document.getElementById('cycle-buttons');
 
     let mouseOptions = ['avg', 'avg_fem', 'avg_male', 'f1', 'f2', 'f3', 'f4', 'f5',
         'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12', 'f13', 'm1', 'm2', 'm3', 'm4', 'm5',
         'm6', 'm7', 'm8', 'm9', 'm10', 'm11', 'm12', 'm13'
-    ]
+    ];
+    let avgOptions = ['avg', 'avg_fem', 'avg_male'];
+    let maleOptions = ['m1', 'm2', 'm3', 'm4', 'm5','m6', 
+        'm7', 'm8', 'm9', 'm10', 'm11', 'm12', 'm13'
+    ];
+    let femaleOptions = ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 
+        'f7', 'f8', 'f9', 'f10', 'f11', 'f12', 'f13'
+    ];
+
     let cycleOptions = [1, 5, 9];
 
 
@@ -90,26 +104,36 @@ async function initializeVisualization() {
         
         label.textContent = getDisplayName(mouse);
         label.insertBefore(input, label.firstChild);
-        selectMouse.appendChild(label);
+        if (avgOptions.includes(mouse)) {
+            selectAvg.appendChild(label);
+        } else if (maleOptions.includes(mouse)) {   
+            selectMale.appendChild(label);
+        } else if (femaleOptions.includes(mouse)) {  
+            selectFemale.appendChild(label);
+        } else {
+            console.log("Error: " + mouse + " not found in any category");
+        }
     });
 
     updateSelectionDisplay();
 
-
-    dropdownButton.addEventListener('click', function () {
-        const dropdownContent = document.getElementById('select-mouse');
-        if (dropdownButton.classList.contains('dropdown-open')) {
-            dropdownButton.classList.remove('dropdown-open');
-            dropdownButton.classList.add('dropdown-closed');
-            dropdownContent.classList.remove('dropdown-visible');
-            dropdownContent.classList.add('dropdown-hidden');
-        } else {
-            dropdownButton.classList.remove('dropdown-closed');
-            dropdownButton.classList.add('dropdown-open');
-            dropdownContent.classList.remove('dropdown-hidden');
-            dropdownContent.classList.add('dropdown-visible');
-        }
-    });
+    for (let i = 0; i < dropdownButtons.length; i++) {
+        let button = dropdownButtons[i];
+        let dropdownContent = selectOptions[i];
+        button.addEventListener('click', function () {
+            if (button.classList.contains('dropdown-open')) {
+                button.classList.remove('dropdown-open');
+                button.classList.add('dropdown-closed');
+                dropdownContent.classList.remove('dropdown-visible');
+                dropdownContent.classList.add('dropdown-hidden');
+            } else {
+                button.classList.remove('dropdown-closed');
+                button.classList.add('dropdown-open');
+                dropdownContent.classList.remove('dropdown-hidden');
+                dropdownContent.classList.add('dropdown-visible');
+            }
+        });
+    };
 
     cycleOptions.forEach((cycle) => {
         let button = document.createElement('button');

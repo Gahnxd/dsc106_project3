@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,17 +9,32 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="script.js" type="module"></script>
 </head>
+
 <body>
     <h1>How Do Mouse Body Temperature Vary During Estrus Cycles?</h1>
     <div class="container">
         <div class="controls-container">
-            <div class="dropdown">
-                <button class="dropdown-closed" id="dropdown-button">
-                    Select Mouse Data
-                </button>
-                <div id="select-mouse" class="dropdown-hidden"></div>
-                <div id="current-selection" class="selection-display"></div> 
+            <div class="dropdown-container">
+                <div class="dropdown avg-dropdown">
+                    <button class="dropdown-button dropdown-closed" id="dropdown-button-avg">
+                        Select Average Data
+                    </button>
+                    <div id="select-avg" class="select-mouse dropdown-hidden"></div>
+                </div>
+                <div class="dropdown male-dropdown">
+                    <button class="dropdown-button dropdown-closed" id="dropdown-button-male">
+                        Select Male Data
+                    </button>
+                    <div id="select-male" class="select-mouse dropdown-hidden"></div>
+                </div>
+                <div class="dropdown female-dropdown">
+                    <button class="dropdown-button dropdown-closed" id="dropdown-button-female">
+                        Select Female Data
+                    </button>
+                    <div id="select-female" class="select-mouse dropdown-hidden"></div>
+                </div>
             </div>
+            <div id="current-selection" class="selection-display"></div>
             <div class="cycle-container">
                 <div class="filter-title">Select Estrus Cycle</div>
                 <div id="cycle-buttons"></div>
@@ -27,4 +43,5 @@
         <svg id="mouse-plot"></svg>
     </div>
 </body>
+
 </html>
