@@ -163,7 +163,7 @@ async function initializeVisualization() {
 
     const yScale = d3
         .scaleLinear()
-        .domain([34.5, 39])
+        .domain([34.5, 40])
         .range([height - margin.bottom, margin.top]);
 
     const xAxis = d3.axisBottom(xScale).tickValues(d3.range(0, 97, 6));
