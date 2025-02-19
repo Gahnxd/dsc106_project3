@@ -303,22 +303,26 @@ svg.append('g')
             currentMouse = ['avg']; // Reset to only Overall Average
             currentCycle = [1]; // Reset to only Cycle 1
         
+            // Uncheck all checkboxes, check only 'avg'
             document.querySelectorAll('.mouse-option').forEach(input => {
                 input.checked = input.value === 'avg';
             });
         
+            // Update cycle selection buttons
             document.querySelectorAll('#cycle-buttons button').forEach(button => {
                 if (button.textContent.includes('Cycle 1')) {
                     button.classList.add('selected-cycle');
+                } else if (currentCycle.includes(parseInt(button.dataset.cycle))) {
+                    button.classList.add('selected-cycle'); // Keep it selected if still in currentCycle
                 } else {
-                    button.classList.remove('selected-cycle');
+                    button.classList.remove('selected-cycle'); // Deselect Cycle 2 & 3, but keep their style
+                    button.classList.add('cycle-button'); // Ensure they retain their original style
                 }
             });
         
             updateSelectionDisplay();
             generateLines(currentCycle, currentMouse);
         };
-
         document.querySelector('.controls-container').appendChild(resetButton);
     }
 
