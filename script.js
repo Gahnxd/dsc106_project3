@@ -290,6 +290,38 @@ svg.append('g')
     }
 
     generateLines([1], ['avg']);
+
+    // Feature 2: Add reset button
+    function addResetButton() {
+        const resetButton = document.createElement('button');
+        resetButton.textContent = 'Reset to Overall Avg - Cycle 1';
+        resetButton.classList.add('reset-button');
+
+        resetButton.onclick = function () {
+            console.log("Reset button clicked!"); // Debugging log
+
+            currentMouse = ['avg']; // Reset to only Overall Average
+            currentCycle = [1]; // Reset to only Cycle 1
+
+            document.querySelectorAll('.mouse-option').forEach(input => {
+                input.checked = input.value === 'avg';
+            });
+
+            document.querySelectorAll('#cycle-buttons button').forEach(button => {
+                button.classList.remove('selected-cycle');
+                if (button.textContent.includes('Cycle 1')) {
+                    button.classList.add('selected-cycle');
+                }
+            });
+
+            updateSelectionDisplay();
+            generateLines(currentCycle, currentMouse);
+        };
+
+        document.querySelector('.controls-container').appendChild(resetButton);
+    }
+
+    addResetButton();
 }
 
 window.addEventListener('load', () => {
@@ -316,55 +348,6 @@ function addDayNightLines(svg, width, height, margin, xScale) {
         .attr('stroke-dasharray', '4,4')
         .attr('class', 'day-night-line');
 }
-
-// Feature 2: Reset button to show Overall Average, Cycle 1
-function addResetButton() {
-    const resetButton = document.createElement('button');
-    resetButton.textContent = 'Reset to Overall Avg - Cycle 1';
-    resetButton.classList.add('reset-button');
-
-    resetButton.onclick = function () {
-        console.log("Reset button clicked!"); // Debugging log
-
-        // Reset the selected data
-        currentMouse = ['avg']; // Reset to only Overall Average
-        currentCycle = ['1']; // Reset to only Cycle 1
-
-        // Uncheck all checkboxes, then check only 'avg'
-        document.querySelectorAll('.select-mouse input').forEach(input => {
-            input.checked = input.value === 'avg';
-        });
-
-        // Reset cycle selection buttons
-        document.querySelectorAll('#cycle-buttons button').forEach(button => {
-            button.classList.remove('selected-cycle');
-            if (button.dataset.cycle === '1') {
-                button.classList.add('selected-cycle');
-            }
-        });
-
-        // Close all dropdowns
-        document.querySelectorAll('.dropdown').forEach(dropdown => {
-            dropdown.classList.remove('dropdown-open');
-            dropdown.classList.add('dropdown-closed');
-        });
-
-        // Hide dropdown options
-        document.querySelectorAll('.select-mouse').forEach(selectBox => {
-            selectBox.classList.add('dropdown-hidden');
-        });
-
-        // Update UI elements
-        updateSelectionDisplay();
-
-        // Re-render the graph with only 'avg' and Cycle 1
-        generateLines(currentCycle, currentMouse);
-    };
-
-    // Add reset button to the controls container
-    document.querySelector('.controls-container').appendChild(resetButton);
-}
-
 
 // Feature 3: Click outside dropdown to close it
 document.addEventListener('click', function (event) {
