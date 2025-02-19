@@ -340,8 +340,8 @@ window.addEventListener('load', () => {
 
 // Feature 1: Add vertical lines for day/night separation with labels
 function addDayNightLines(svg, width, height, margin, xScale) {
-    const dayPeriods = [0, 24, 48, 72];    // Daytime start
-    const nightPeriods = [12, 36, 60, 84]; // Nighttime start
+    const dayPeriods = [0, 24, 48, 72];    // Daytime start (in hours)
+    const nightPeriods = [12, 36, 60, 84]; // Nighttime start (in hours)
 
     // Function to place lines accurately
     function placeLine(selection, data, color, dashArray = null) {
@@ -349,8 +349,8 @@ function addDayNightLines(svg, width, height, margin, xScale) {
             .data(data)
             .enter()
             .append('line')
-            .attr('x1', d => xScale(d))  // Use xScale for positioning the line
-            .attr('x2', d => xScale(d))  // Same for the x2 position
+            .attr('x1', d => xScale(d / 60))  // Scale the periods by dividing by 60 to match generateLines
+            .attr('x2', d => xScale(d / 60))  // Same for the x2 position
             .attr('y1', margin.top)
             .attr('y2', height - margin.bottom)
             .attr('stroke', color)
@@ -371,7 +371,7 @@ function addDayNightLines(svg, width, height, margin, xScale) {
             .data(data)
             .enter()
             .append('text')
-            .attr('x', d => xScale(d) + 5)  // Use xScale to position labels
+            .attr('x', d => xScale(d / 60) + 5)  // Scale the periods by dividing by 60 to match generateLines
             .attr('y', margin.top - 10)     // Adjust label position above the lines
             .attr('fill', color)
             .attr('font-size', '12px')
@@ -383,6 +383,7 @@ function addDayNightLines(svg, width, height, margin, xScale) {
     addLabels(svg.selectAll('.day-label'), dayPeriods, 'Day Start', 'black');
     addLabels(svg.selectAll('.night-label'), nightPeriods, 'Night Start', 'gray');
 }
+
 
 // Feature 3: Click outside dropdown to close it
 document.addEventListener('click', function (event) {
