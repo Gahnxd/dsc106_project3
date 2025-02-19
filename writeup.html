@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writeup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+        @media (min-width: 768px) {
+            body {
+                padding-left: 100px;
+                padding-right: 100px;
+            }
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        a.home-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            
+        }
+        a.home-button:hover {
+            background-color: #297bb2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rationale for Design Decisions</h1>
+    <p>
+        We, the Department of Graphic Engineers (DOGE), were inspired by the quote “A tightly focused, well-implemented interactive graphic is much preferred to a sprawling design that attempts too much!” from Project 3 documentation. This quote was a foundation for our design decisions. We wanted to visualize how mouse body temperature varies across the different estrus cycles. 
+    </p>
+    <p>
+        We chose a line chart as the primary visual encoding because it's ideal for displaying time-series data. Temperature changes over time (hours) are naturally represented by a continuous line so that users can easily see the trends, patterns, and fluctuations. An alternative we considered was a heatmap, which could show temperature variations across mice and cycles. However, a heatmap would make it harder to track individual mouse temperature changes over time. Different colors were used to distinguish between different mice and cycles, including aggregated mice temperature. We could have also used different line styles in addition to color. However, using line styles can make it look more cluttered with multiple varying line types.
+    </p>
+    <p>
+        For our axes, the x-axis represents time in hours, ranging from 0 to 96 hours with tick marks placed every 6 hours for ease of reading. We could have displayed the x-axis in days instead of hours, but we thought that it would diminish the information gained from each hour. We also included a dashed vertical line to show where the day and night start, allowing users to see trend changes or interesting patterns during the day vs night. An alternative was to use background shading to indicate day and night periods. However, vertical lines are less visually intrusive. For our y-axis, we have temperature in degrees Celsius. The domain is set to [34.5, 40] based on the range of values in the dataset. We had considered calculating and changing the y-axis domain based on the data. However, fixing the domain allows for easier comparison of temperature values across different mice and cycles. We used subtle grid lines added to both the x and y axes to help users easily read values from the chart.
+    </p>
+    <p>
+        For interactivity, we used tooltips to display detailed information about a data point when the user hovers over a line. The tooltip shows the mouse ID, cycle, hour, and temperature. We could have displayed the data in a separate table, but tooltips provide a more direct and interactive way to access information at specific points in the graph. We used highlighted dropdown checkboxes that allow users to select or deselect individual mice and overall, female and male body temperature averages to display on the chart. This provides a flexible way to compare different mice or with the averages. We used buttons for users to select and deselect cycles to display on the chart. This allows users to focus on specific time periods. We did consider using a slider or a range input. However, buttons provide a more discrete and clear way to select specific cycles.
+    </p>
+    <p>
+        Additionally, we have a reset button that allows users to quickly return to the default view (Overall Average, Cycle 1). We made it so that the dropdown menu will close when the user clicks outside of the menu, making it easier to use. We also have it so that when the user hovers over a line, the line is highlighted to make it easier to track. Finally, we have a currently selected display feature that tells the user what they have currently selected (e.g. Male 1, Female 2…), making it easy for the user to track what they have selected rather than having to reopen the drop-down menu to check. 
+    </p>
+    <p>
+        Overall, all the interactive methods mentioned and visual encodings help to create an easy interactive experience for users, with each method and encoding we thought of different alternatives but with the justification we provided and thorough consideration, it led to the final interactive website we have provided.
+    </p>
+
+    <h1>An overview of your development process.</h1>
+    <p>Our development process consisted of the three of us setting up a GitHub repo and a Discord group chat. We then agreed on a dataset and decided on a question we wanted our visualization to answer. Then we got to work on the project checkpoint, we split the 5 graphs into 2 per person, with one person doing 1. The person who did one was responsible for recording the video and submitting the assignment. The graph creation for this took around 2-4 hours per person, and recording the video took 30 minutes for 1 person.
+    </p>
+    <p>For our final submission, we then decided on the final question that we wanted to answer with our interactive website. Then we planned out different aspects of the website and distributed the work evenly. One person was in charge of cleaning up the data into a static format (JSON) to be used in d3, this took around 1 hour. Then we collectively coded different functions and features in the interactive graph. These features included the graph itself, the tooltip, mouse filters, cycle filters, day-night separation lines, and much more. This took each person around 4-5 hours to complete their designated task. We also collaborated by live coding together, which is also included in the time it took to complete certain tasks. So this part of the project took the most time compared to other things.
+    </p>
+    <a href="index.html" class="home-button">Go Back to Graph</a>
+</body>
+</html>

@@ -215,12 +215,12 @@ h1 {
 }
 
 .selection-display span.selection-span {
-  opacity: 0; /* Initially hidden */
-  transition: opacity 1s ease; /* Adjust duration as needed */
+  opacity: 0;
+  transition: opacity 1s ease;
 }
 
 .selection-display span.selection-span.visible {
-  opacity: 1; /* Fully visible */
+  opacity: 1;
 }
 
 .grid line {
@@ -272,4 +272,23 @@ h1 {
 
 .reset-button:hover {
   background-color: var(--hover-color);
+}
+
+.writeup-link {
+    display: block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.writeup-link:hover {
+    background-color: #2983bf;
+    transition: background-color 0.3s ease;
 }
