@@ -322,10 +322,36 @@ function addResetButton() {
     const resetButton = document.createElement('button');
     resetButton.textContent = 'Reset to Overall Avg - Cycle 1';
     resetButton.classList.add('reset-button');
+
     resetButton.onclick = function () {
-        generateLines([1], ['avg']);
+        // Reset selection state
+        currentCycle = [1];
+        currentMouse = ['avg'];
+
+        // Update checkboxes to match reset state
+        document.querySelectorAll('.mouse-option').forEach(input => {
+            input.checked = currentMouse.includes(input.value);
+        });
+
+        // Visually update the selected cycle buttons
+        document.querySelectorAll('.cycle-button, .selected-cycle').forEach(button => {
+            button.classList.remove('selected-cycle');
+            button.classList.add('cycle-button');
+        });
+
+        // Ensure cycle 1 button is highlighted correctly
+        document.querySelectorAll('.cycle-button').forEach(button => {
+            if (button.innerHTML.includes("Cycle 1")) {
+                button.classList.add('selected-cycle');
+                button.classList.remove('cycle-button');
+            }
+        });
+
+        // Regenerate the graph
+        generateLines(currentCycle, currentMouse);
         updateSelectionDisplay();
     };
+
     document.body.appendChild(resetButton);
 }
 
