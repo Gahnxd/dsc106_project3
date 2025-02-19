@@ -320,7 +320,7 @@ function addDayNightLines(svg, width, height, margin, xScale) {
 // Feature 2: Reset button to show Overall Average, Cycle 1
 function addResetButton() {
     const resetButton = document.createElement('button');
-    resetButton.textContent = 'Reset to Overall Avg - Cycle 1';
+    resetButton.textContent = 'Reset';
     resetButton.classList.add('reset-button');
 
     resetButton.onclick = function () {
