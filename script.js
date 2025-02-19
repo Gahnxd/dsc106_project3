@@ -328,7 +328,7 @@ function addResetButton() {
         currentCycle = [1];
         currentMouse = ['avg'];
 
-        // Uncheck all checkboxes and check only "avg"
+        // Reset mouse checkboxes: Uncheck all, then check only "avg"
         document.querySelectorAll('.mouse-option').forEach(input => {
             input.checked = input.value === 'avg';
         });
@@ -338,8 +338,8 @@ function addResetButton() {
             button.classList.remove('selected-cycle');
             button.classList.add('cycle-button');
 
-            // Reapply "selected-cycle" class to Cycle 1 button
-            if (button.innerHTML.includes("Cycle 1")) {
+            // Highlight only the Cycle 1 button
+            if (button.textContent.includes("Cycle 1")) {
                 button.classList.add('selected-cycle');
                 button.classList.remove('cycle-button');
             }
@@ -352,7 +352,6 @@ function addResetButton() {
 
     document.body.appendChild(resetButton);
 }
-
 
 // Feature 3: Click outside dropdown to close it
 document.addEventListener('click', function (event) {
