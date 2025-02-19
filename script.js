@@ -300,3 +300,51 @@ window.addEventListener('load', () => {
         }
     });
 });
+
+// Feature 1: Add vertical lines for day/night separation
+function addDayNightLines(svg, width, height, margin, xScale) {
+    const nightPeriods = [0, 24, 48, 72];
+    svg.selectAll('.day-night-line')
+        .data(nightPeriods)
+        .enter()
+        .append('line')
+        .attr('x1', d => xScale(d))
+        .attr('x2', d => xScale(d))
+        .attr('y1', margin.top)
+        .attr('y2', height - margin.bottom)
+        .attr('stroke', 'gray')
+        .attr('stroke-dasharray', '4,4')
+        .attr('class', 'day-night-line');
+}
+
+// Feature 2: Reset button to show Overall Average, Cycle 1
+function addResetButton() {
+    const resetButton = document.createElement('button');
+    resetButton.textContent = 'Reset to Overall Avg - Cycle 1';
+    resetButton.classList.add('reset-button');
+    resetButton.onclick = function () {
+        generateLines([1], ['avg']);
+        updateSelectionDisplay();
+    };
+    document.body.appendChild(resetButton);
+}
+
+// Feature 3: Click outside dropdown to close it
+document.addEventListener('click', function (event) {
+    document.querySelectorAll('.dropdown-button').forEach(button => {
+        const dropdown = button.nextElementSibling;
+        if (dropdown && !button.contains(event.target) && !dropdown.contains(event.target)) {
+            button.classList.remove('dropdown-open');
+            button.classList.add('dropdown-closed');
+            dropdown.classList.remove('dropdown-visible');
+            dropdown.classList.add('dropdown-hidden');
+        }
+    });
+});
+
+// Ensure features are added after visualization initializes
+window.addEventListener('load', () => {
+    const svg = d3.select('#mouse-plot');
+    addDayNightLines(svg, 1400, 600, { top: 20, right: 20, bottom: 40, left: 60 }, d3.scaleLinear().domain([0, 96]).range([60, 1340]));
+    addResetButton();
+});
