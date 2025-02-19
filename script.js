@@ -328,6 +328,14 @@ svg.append('g')
 
             // Highlight 'Overall Average' label
             document.getElementById('label-avg').classList.add('selected-label');
+
+            // Remove highlight from every other label
+            document.querySelectorAll('.selected-label').forEach(label => {
+                if (label.id !== 'label-avg') {
+                    label.classList.remove('selected-label');
+                }
+            });
+
             
             updateSelectionDisplay();
             generateLines(currentCycle, currentMouse);
