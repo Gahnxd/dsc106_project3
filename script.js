@@ -324,34 +324,45 @@ function addResetButton() {
     resetButton.classList.add('reset-button');
 
     resetButton.onclick = function () {
-        // Reset selections
-        currentCycle = [1];
-        currentMouse = ['avg'];
+        // Reset data selections
+        currentCycle = [1]; // Reset to Cycle 1
+        currentMouse = ['avg']; // Reset to Overall Average
 
         // Reset mouse checkboxes: Uncheck all, then check only "avg"
-        document.querySelectorAll('.mouse-option').forEach(input => {
+        document.querySelectorAll('.select-mouse input').forEach(input => {
             input.checked = input.value === 'avg';
         });
 
         // Reset cycle selection buttons
-        document.querySelectorAll('.cycle-button, .selected-cycle').forEach(button => {
+        document.querySelectorAll('#cycle-buttons button').forEach(button => {
             button.classList.remove('selected-cycle');
-            button.classList.add('cycle-button');
-
-            // Highlight only the Cycle 1 button
             if (button.textContent.includes("Cycle 1")) {
                 button.classList.add('selected-cycle');
-                button.classList.remove('cycle-button');
             }
         });
 
+        // Visually close dropdowns (if they are open)
+        document.querySelectorAll('.dropdown').forEach(dropdown => {
+            dropdown.classList.remove('dropdown-open');
+            dropdown.classList.add('dropdown-closed');
+        });
+
+        // Hide dropdown options
+        document.querySelectorAll('.select-mouse').forEach(selectBox => {
+            selectBox.classList.add('dropdown-hidden');
+        });
+
+        // Update the selection display
+        updateSelectionDisplay();
+
         // Regenerate the graph with only "avg" for Cycle 1
         generateLines(currentCycle, currentMouse);
-        updateSelectionDisplay();
     };
 
-    document.body.appendChild(resetButton);
+    // Add reset button to the controls container
+    document.querySelector('.controls-container').appendChild(resetButton);
 }
+
 
 // Feature 3: Click outside dropdown to close it
 document.addEventListener('click', function (event) {
