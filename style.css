@@ -225,3 +225,10 @@ h1 {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.footnote {
+    font-size: 14px;
+    color: gray;
+    margin-top: 10px;
+    font-style: italic;
+}
