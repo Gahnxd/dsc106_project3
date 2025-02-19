@@ -280,7 +280,7 @@ h1 {
     background-color: #3498db;
     color: white;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     margin-top: 20px;
     width: fit-content;
     margin-left: auto;
