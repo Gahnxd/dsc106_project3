@@ -29,7 +29,7 @@ h1 {
   color: var(--primary-color);
   margin-bottom: 30px;
   margin-top: 15px;
-  font-size: 2em;
+  font-size: 2.5em;
 }
 
 .dropdown-container {
@@ -94,6 +94,21 @@ h1 {
 
 .select-mouse input[type="checkbox"] {
   margin-right: 10px;
+  visibility: visible;
+}
+
+.selected-label {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 5px 10px;
+  border-radius: var(--border-radius);
+  margin: 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.selected-label:hover {
+  background-color: var(--hover-color) !important;
 }
 
 .filter-title {
@@ -199,6 +214,15 @@ h1 {
   font-size: 0.9rem;
 }
 
+.selection-display span.selection-span {
+  opacity: 0; /* Initially hidden */
+  transition: opacity 1s ease; /* Adjust duration as needed */
+}
+
+.selection-display span.selection-span.visible {
+  opacity: 1; /* Fully visible */
+}
+
 .grid line {
   stroke: #e0e0e0;
   stroke-width: 0.5;
@@ -231,4 +255,21 @@ h1 {
     color: gray;
     margin-top: 10px;
     font-style: italic;
+}
+
+.reset-button {
+  width: auto;
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 5px 1.5em;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.3s ease;
+  margin: 0;
+}
+
+.reset-button:hover {
+  background-color: var(--hover-color);
 }

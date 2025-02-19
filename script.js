@@ -80,13 +80,13 @@ async function initializeVisualization() {
         selectionDisplay.innerHTML = `Currently Selected: ${displayText}`;
     }
 
-
     mouseOptions.forEach((mouse) => {
         let label = document.createElement('label');
         let input = document.createElement('input');
         input.type = 'checkbox';
         input.value = mouse;
         input.classList.add('mouse-option');
+        label.id = 'label-' + mouse;
         
         input.checked = (mouse === 'avg');
         
@@ -94,9 +94,11 @@ async function initializeVisualization() {
             if (this.checked) {
                 if (!currentMouse.includes(this.value)) {
                     currentMouse.push(this.value);
+                    label.classList.add('selected-label');
                 }
             } else {
                 currentMouse = currentMouse.filter(m => m !== this.value);
+                label.classList.remove('selected-label');
             }
             generateLines(currentCycle, currentMouse);
             updateSelectionDisplay();
@@ -112,6 +114,10 @@ async function initializeVisualization() {
             selectFemale.appendChild(label);
         } else {
             console.log("Error: " + mouse + " not found in any category");
+        }
+
+        if (currentMouse.includes(mouse)) {
+            label.classList.add('selected-label');
         }
     });
 
@@ -275,7 +281,7 @@ svg.append('g')
                         const formattedHour = `${String(Math.floor(minute / 60)).padStart(2, '0')}`;
 
                         tooltip.html(`Data: ${getDisplayName(m)}<br>` +
-                                     `Cycle: ${i}<br>` +
+                                     `Cycle: ${(Math.floor(i / 4) + 1)}<br>` +
                                      `Hour: ${formattedHour}:${formattedMinute}<br>` +
                                      `Temperature: ${temp.toFixed(2)}°C`)
                             .style("left", (event.pageX + 10) + "px")
@@ -294,11 +300,11 @@ svg.append('g')
     // Feature 2: Add reset button
     function addResetButton() {
         const resetButton = document.createElement('button');
-        resetButton.textContent = 'Reset to Overall Avg - Cycle 1';
+        resetButton.textContent = 'Reset'; //'Reset to Overall Avg - Cycle 1';
         resetButton.classList.add('reset-button');
 
         resetButton.onclick = function () {
-            console.log("Reset button clicked!");
+            // console.log("Reset button clicked!");
         
             currentMouse = ['avg']; // Reset to only Overall Average
             currentCycle = [1]; // Reset to only Cycle 1
@@ -319,7 +325,10 @@ svg.append('g')
                     button.classList.add('cycle-button'); // Ensure they retain their original style
                 }
             });
-        
+
+            // Highlight 'Overall Average' label
+            document.getElementById('label-avg').classList.add('selected-label');
+            
             updateSelectionDisplay();
             generateLines(currentCycle, currentMouse);
         };
@@ -330,12 +339,13 @@ svg.append('g')
 }
 
 window.addEventListener('load', () => {
-    initializeVisualization().then(() => {
-        const selectionDisplay = document.getElementById('current-selection');
-        if (selectionDisplay) {
-            updateSelectionDisplay();
-        }
-    });
+    // initializeVisualization().then(() => {
+    //     const selectionDisplay = document.getElementById('current-selection');
+    //     if (selectionDisplay) {
+    //         updateSelectionDisplay();
+    //     }
+    // });
+    initializeVisualization();
 });
 
 // Feature 1: Add vertical lines for day/night separation with labels
@@ -401,6 +411,6 @@ document.addEventListener('click', function (event) {
 // Ensure features are added after visualization initializes
 window.addEventListener('load', () => {
     const svg = d3.select('#mouse-plot');
-    addDayNightLines(svg, 1400, 600, { top: 20, right: 20, bottom: 40, left: 60 }, d3.scaleLinear().domain([0, 96]).range([60, 1340]));
-    addResetButton();
+    addDayNightLines(svg, 1400, 600, { top: 20, right: 20, bottom: 40, left: 60 }, d3.scaleLinear().domain([0, 96]).range([60, 1380]));
+    // addResetButton();
 });
