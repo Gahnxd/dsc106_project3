@@ -338,10 +338,26 @@ window.addEventListener('load', () => {
     });
 });
 
-// Feature 1: Add vertical lines for day/night separation
+// Feature 1: Add vertical lines for day/night separation with labels
 function addDayNightLines(svg, width, height, margin, xScale) {
-    const nightPeriods = [0, 24, 48, 72];
-    svg.selectAll('.day-night-line')
+    const dayPeriods = [0, 24, 48, 72];   // Daytime starts
+    const nightPeriods = [12, 36, 60, 84]; // Nighttime starts
+
+    // Add solid lines for daytime start
+    svg.selectAll('.day-line')
+        .data(dayPeriods)
+        .enter()
+        .append('line')
+        .attr('x1', d => xScale(d))
+        .attr('x2', d => xScale(d))
+        .attr('y1', margin.top)
+        .attr('y2', height - margin.bottom)
+        .attr('stroke', 'black') // Solid black lines for daytime
+        .attr('stroke-width', 1.5)
+        .attr('class', 'day-line');
+
+    // Add dashed lines for nighttime start
+    svg.selectAll('.night-line')
         .data(nightPeriods)
         .enter()
         .append('line')
@@ -350,8 +366,32 @@ function addDayNightLines(svg, width, height, margin, xScale) {
         .attr('y1', margin.top)
         .attr('y2', height - margin.bottom)
         .attr('stroke', 'gray')
-        .attr('stroke-dasharray', '4,4')
-        .attr('class', 'day-night-line');
+        .attr('stroke-dasharray', '4,4') // Dashed for night
+        .attr('class', 'night-line');
+
+    // Add labels for Day Start
+    svg.selectAll('.day-label')
+        .data(dayPeriods)
+        .enter()
+        .append('text')
+        .attr('x', d => xScale(d) + 5) // Offset for better readability
+        .attr('y', height - margin.bottom + 20) // Position below chart
+        .attr('fill', 'black')
+        .attr('font-size', '12px')
+        .text('Day Start')
+        .attr('class', 'day-label');
+
+    // Add labels for Night Start
+    svg.selectAll('.night-label')
+        .data(nightPeriods)
+        .enter()
+        .append('text')
+        .attr('x', d => xScale(d) + 5) // Offset for better readability
+        .attr('y', height - margin.bottom + 20) // Position below chart
+        .attr('fill', 'gray')
+        .attr('font-size', '12px')
+        .text('Night Start')
+        .attr('class', 'night-label');
 }
 
 // Feature 3: Click outside dropdown to close it
