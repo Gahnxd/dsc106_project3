@@ -324,11 +324,13 @@ function addResetButton() {
     resetButton.classList.add('reset-button');
 
     resetButton.onclick = function () {
-        // Reset data selections
-        currentCycle = [1]; // Reset to Cycle 1
-        currentMouse = ['avg']; // Reset to Overall Average
+        console.log("Reset button clicked!"); // Debugging log
 
-        // Reset mouse checkboxes: Uncheck all, then check only "avg"
+        // Reset the selected data
+        currentMouse = ['avg']; // Reset to only Overall Average
+        currentCycle = ['1']; // Reset to only Cycle 1
+
+        // Uncheck all checkboxes, then check only 'avg'
         document.querySelectorAll('.select-mouse input').forEach(input => {
             input.checked = input.value === 'avg';
         });
@@ -336,12 +338,12 @@ function addResetButton() {
         // Reset cycle selection buttons
         document.querySelectorAll('#cycle-buttons button').forEach(button => {
             button.classList.remove('selected-cycle');
-            if (button.textContent.includes("Cycle 1")) {
+            if (button.dataset.cycle === '1') {
                 button.classList.add('selected-cycle');
             }
         });
 
-        // Visually close dropdowns (if they are open)
+        // Close all dropdowns
         document.querySelectorAll('.dropdown').forEach(dropdown => {
             dropdown.classList.remove('dropdown-open');
             dropdown.classList.add('dropdown-closed');
@@ -352,10 +354,10 @@ function addResetButton() {
             selectBox.classList.add('dropdown-hidden');
         });
 
-        // Update the selection display
+        // Update UI elements
         updateSelectionDisplay();
 
-        // Regenerate the graph with only "avg" for Cycle 1
+        // Re-render the graph with only 'avg' and Cycle 1
         generateLines(currentCycle, currentMouse);
     };
 
