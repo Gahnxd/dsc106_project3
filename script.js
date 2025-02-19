@@ -340,60 +340,48 @@ window.addEventListener('load', () => {
 
 // Feature 1: Add vertical lines for day/night separation with labels
 function addDayNightLines(svg, width, height, margin, xScale) {
-    const dayPeriods = [0, 24, 48, 72];   // Daytime starts
-    const nightPeriods = [12, 36, 60, 84]; // Nighttime starts
+    const dayPeriods = [0, 24, 48, 72];    // Daytime start
+    const nightPeriods = [12, 36, 60, 84]; // Nighttime start
 
-    // Add solid lines for daytime start
-    svg.selectAll('.day-line')
-        .data(dayPeriods)
-        .enter()
-        .append('line')
-        .attr('x1', d => xScale(d))
-        .attr('x2', d => xScale(d))
-        .attr('y1', margin.top)
-        .attr('y2', height - margin.bottom)
-        .attr('stroke', 'black') // Solid black lines for daytime
-        .attr('stroke-width', 1.5)
-        .attr('class', 'day-line');
+    // Function to place lines accurately
+    function placeLine(selection, data, color, dashArray = null) {
+        selection
+            .data(data)
+            .enter()
+            .append('line')
+            .attr('x1', d => Math.round(xScale(d)))
+            .attr('x2', d => Math.round(xScale(d)))
+            .attr('y1', margin.top)
+            .attr('y2', height - margin.bottom)
+            .attr('stroke', color)
+            .attr('stroke-width', 1.5)
+            .attr('class', 'time-line')
+            .attr('stroke-dasharray', dashArray ? '4,4' : 'none');
+    }
 
-    // Add dashed lines for nighttime start
-    svg.selectAll('.night-line')
-        .data(nightPeriods)
-        .enter()
-        .append('line')
-        .attr('x1', d => xScale(d))
-        .attr('x2', d => xScale(d))
-        .attr('y1', margin.top)
-        .attr('y2', height - margin.bottom)
-        .attr('stroke', 'gray')
-        .attr('stroke-dasharray', '4,4') // Dashed for night
-        .attr('class', 'night-line');
+    // Draw daytime lines (solid black)
+    placeLine(svg.selectAll('.day-line'), dayPeriods, 'black');
 
-    // Add labels for Day Start at the top
-    svg.selectAll('.day-label')
-        .data(dayPeriods)
-        .enter()
-        .append('text')
-        .attr('x', d => xScale(d) + 5)
-        .attr('y', margin.top - 10)
-        .attr('fill', 'black')
-        .attr('font-size', '12px')
-        .attr('text-anchor', 'start')
-        .text('Day Start')
-        .attr('class', 'day-label');
+    // Draw nighttime lines (dashed gray)
+    placeLine(svg.selectAll('.night-line'), nightPeriods, 'gray', true);
 
-    // Add labels for Night Start at the top
-    svg.selectAll('.night-label')
-        .data(nightPeriods)
-        .enter()
-        .append('text')
-        .attr('x', d => xScale(d) + 5)
-        .attr('y', margin.top - 10)
-        .attr('fill', 'gray')
-        .attr('font-size', '12px')
-        .attr('text-anchor', 'start')
-        .text('Night Start')
-        .attr('class', 'night-label');
+    // Function to add labels
+    function addLabels(selection, data, text, color) {
+        selection
+            .data(data)
+            .enter()
+            .append('text')
+            .attr('x', d => Math.round(xScale(d)) + 5)
+            .attr('y', margin.top - 10)
+            .attr('fill', color)
+            .attr('font-size', '12px')
+            .attr('text-anchor', 'start')
+            .text(text);
+    }
+
+    // Add labels
+    addLabels(svg.selectAll('.day-label'), dayPeriods, 'Day Start', 'black');
+    addLabels(svg.selectAll('.night-label'), nightPeriods, 'Night Start', 'gray');
 }
 
 
