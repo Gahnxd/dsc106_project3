@@ -349,8 +349,8 @@ function addDayNightLines(svg, width, height, margin, xScale) {
             .data(data)
             .enter()
             .append('line')
-            .attr('x1', d => Math.round(xScale(d)))
-            .attr('x2', d => Math.round(xScale(d)))
+            .attr('x1', d => xScale(d))  // Use xScale for positioning the line
+            .attr('x2', d => xScale(d))  // Same for the x2 position
             .attr('y1', margin.top)
             .attr('y2', height - margin.bottom)
             .attr('stroke', color)
@@ -371,19 +371,18 @@ function addDayNightLines(svg, width, height, margin, xScale) {
             .data(data)
             .enter()
             .append('text')
-            .attr('x', d => Math.round(xScale(d)) + 5)
-            .attr('y', margin.top - 10)
+            .attr('x', d => xScale(d) + 5)  // Use xScale to position labels
+            .attr('y', margin.top - 10)     // Adjust label position above the lines
             .attr('fill', color)
             .attr('font-size', '12px')
             .attr('text-anchor', 'start')
             .text(text);
     }
 
-    // Add labels
+    // Add labels for Day and Night periods
     addLabels(svg.selectAll('.day-label'), dayPeriods, 'Day Start', 'black');
     addLabels(svg.selectAll('.night-label'), nightPeriods, 'Night Start', 'gray');
 }
-
 
 // Feature 3: Click outside dropdown to close it
 document.addEventListener('click', function (event) {
