@@ -12,7 +12,7 @@ async function initializeVisualization() {
     const mouseData = await loadMouseData();
 
     const svg = d3.select('#mouse-plot');
-    const width = 1400;
+    const width = 1250;
     const height = 600;
     const margin = { top: 20, right: 20, bottom: 40, left: 60 };
 
@@ -284,8 +284,8 @@ svg.append('g')
                                      `Cycle: ${(Math.floor(i / 4) + 1)}<br>` +
                                      `Hour: ${formattedHour}:${formattedMinute}<br>` +
                                      `Temperature: ${temp.toFixed(2)}°C`)
-                            .style("left", (event.pageX + 10) + "px")
-                            .style("top", (event.pageY - 10) + "px");
+                            .style("left", (event.pageX - 70) + "px")
+                            .style("top", (event.pageY + 15) + "px");
                     })
                     .on('mouseout', function () {
                         d3.select(this).attr('stroke-width', 1.5);
@@ -419,6 +419,6 @@ document.addEventListener('click', function (event) {
 // Ensure features are added after visualization initializes
 window.addEventListener('load', () => {
     const svg = d3.select('#mouse-plot');
-    addDayNightLines(svg, 1400, 600, { top: 20, right: 20, bottom: 40, left: 60 }, d3.scaleLinear().domain([0, 96]).range([60, 1380]));
+    addDayNightLines(svg, 1400, 600, { top: 20, right: 20, bottom: 40, left: 60 }, d3.scaleLinear().domain([0, 96]).range([60, 1230]));
     // addResetButton();
 });
