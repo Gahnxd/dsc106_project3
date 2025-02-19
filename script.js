@@ -369,30 +369,33 @@ function addDayNightLines(svg, width, height, margin, xScale) {
         .attr('stroke-dasharray', '4,4') // Dashed for night
         .attr('class', 'night-line');
 
-    // Add labels for Day Start
+    // Add labels for Day Start at the top
     svg.selectAll('.day-label')
         .data(dayPeriods)
         .enter()
         .append('text')
-        .attr('x', d => xScale(d) + 5) // Offset for better readability
-        .attr('y', height - margin.bottom + 20) // Position below chart
+        .attr('x', d => xScale(d) + 5)
+        .attr('y', margin.top - 10)
         .attr('fill', 'black')
         .attr('font-size', '12px')
+        .attr('text-anchor', 'start')
         .text('Day Start')
         .attr('class', 'day-label');
 
-    // Add labels for Night Start
+    // Add labels for Night Start at the top
     svg.selectAll('.night-label')
         .data(nightPeriods)
         .enter()
         .append('text')
-        .attr('x', d => xScale(d) + 5) // Offset for better readability
-        .attr('y', height - margin.bottom + 20) // Position below chart
+        .attr('x', d => xScale(d) + 5)
+        .attr('y', margin.top - 10)
         .attr('fill', 'gray')
         .attr('font-size', '12px')
+        .attr('text-anchor', 'start')
         .text('Night Start')
         .attr('class', 'night-label');
 }
+
 
 // Feature 3: Click outside dropdown to close it
 document.addEventListener('click', function (event) {
