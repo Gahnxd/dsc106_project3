@@ -298,22 +298,23 @@ svg.append('g')
         resetButton.classList.add('reset-button');
 
         resetButton.onclick = function () {
-            console.log("Reset button clicked!"); // Debugging log
-
+            console.log("Reset button clicked!");
+        
             currentMouse = ['avg']; // Reset to only Overall Average
             currentCycle = [1]; // Reset to only Cycle 1
-
+        
             document.querySelectorAll('.mouse-option').forEach(input => {
                 input.checked = input.value === 'avg';
             });
-
+        
             document.querySelectorAll('#cycle-buttons button').forEach(button => {
-                button.classList.remove('selected-cycle');
                 if (button.textContent.includes('Cycle 1')) {
                     button.classList.add('selected-cycle');
+                } else {
+                    button.classList.remove('selected-cycle');
                 }
             });
-
+        
             updateSelectionDisplay();
             generateLines(currentCycle, currentMouse);
         };
