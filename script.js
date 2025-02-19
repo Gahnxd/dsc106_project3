@@ -349,8 +349,8 @@ function addDayNightLines(svg, width, height, margin, xScale) {
             .data(data)
             .enter()
             .append('line')
-            .attr('x1', d => xScale(d / 60))  // Scale the periods by dividing by 60 to match generateLines
-            .attr('x2', d => xScale(d / 60))  // Same for the x2 position
+            .attr('x1', d => xScale(d))
+            .attr('x2', d => xScale(d))
             .attr('y1', margin.top)
             .attr('y2', height - margin.bottom)
             .attr('stroke', color)
@@ -371,8 +371,8 @@ function addDayNightLines(svg, width, height, margin, xScale) {
             .data(data)
             .enter()
             .append('text')
-            .attr('x', d => xScale(d / 60) + 5)  // Scale the periods by dividing by 60 to match generateLines
-            .attr('y', margin.top - 10)     // Adjust label position above the lines
+            .attr('x', d => xScale(d) + 5)
+            .attr('y', margin.top - 10)
             .attr('fill', color)
             .attr('font-size', '12px')
             .attr('text-anchor', 'start')
